@@ -5,8 +5,8 @@ import 'package:starbacks/core/resources/fonts.dart';
 import 'package:material_color_generator/material_color_generator.dart';
 
 ThemeData themeData = ThemeData(
-  primarySwatch: generateMaterialColor(color: primaryColor),
-  primaryColor: primaryColor,
+  primarySwatch: generateMaterialColor(color: BaseColors.primaryColor),
+  primaryColor: BaseColors.primaryColor,
   textTheme: const TextTheme(
       // titleSmall: titleSmall,
       // titleMedium: titleMedium,
