@@ -6,8 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:starbacks/core/resources/colors.dart';
 import 'package:unicons/unicons.dart';
 
-class ProductDetail extends StatelessWidget {
-  const ProductDetail({super.key});
+class ProductDetailScreen extends StatelessWidget {
+  const ProductDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +110,95 @@ class ProductDetail extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 20),
+                  // Container(
+                  //   child: Row(
+                  //     children: [
+                  //       Text(
+                  //         "Quantity : ",
+                  //         style: GoogleFonts.raleway().copyWith(
+                  //           fontSize: 18,
+                  //           color: Color(0xFF6D6D6D),
+                  //         ),
+                  //       ),
+                  //       Container(
+                  //         decoration: BoxDecoration(
+                  //           borderRadius: BorderRadius.circular(666),
+                  //         ),
+                  //         width: 100,
+                  //         height: 40,
+                  //         child: Row(
+                  //           children: [
+                  //             Expanded(
+                  //               child: Container(
+                  //                 decoration: BoxDecoration(
+                  //                   shape: BoxShape.circle,
+                  //                   color: BaseColors.primaryColor,
+                  //                 ),
+                  //                 height: double.infinity,
+                  //                 child: Icon(
+                  //                   UniconsLine.minus,
+                  //                   color: BaseColors.backgroundColor,
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //             Expanded(
+                  //               child: Center(
+                  //                 child: Text(
+                  //                   "1",
+                  //                   style: GoogleFonts.poppins().copyWith(
+                  //                     fontSize: 18,
+                  //                     color: BaseColors.primaryColor,
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //             Expanded(
+                  //               child: Container(
+                  //                 decoration: BoxDecoration(
+                  //                   shape: BoxShape.circle,
+                  //                   color: BaseColors.primaryColor,
+                  //                 ),
+                  //                 height: double.infinity,
+                  //                 child: Icon(
+                  //                   UniconsLine.plus,
+                  //                   color: BaseColors.backgroundColor,
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // SizedBox(height: 20),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Topping(
+                          label: 'small',
+                          isSelected: true,
+                        ),
+                        Topping(label: 'medium'),
+                        Topping(
+                          label: 'large',
+                        ),
+                        Topping(
+                          label: 'jumbo',
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    "Description",
+                    style: GoogleFonts.raleway().copyWith(
+                      fontSize: 16,
+                      color: Color(0xFF6D6D6D),
+                    ),
+                  ),
+                  Divider(),
                   Text(
                     "This is a simple Starbucks app repository, featuring a cart system that allows users to add menu items to their virtual cart.",
                     style: GoogleFonts.raleway().copyWith(
@@ -117,22 +206,7 @@ class ProductDetail extends StatelessWidget {
                       color: Color(0xFF6D6D6D),
                     ),
                   ),
-                  SizedBox(height: 20),
-                  Container(
-                    child: Row(
-                      children: [
-                        Topping(
-                          label: 'Tall',
-                          isSelected: true,
-                        ),
-                        Topping(label: 'Grande'),
-                        Topping(
-                          label: 'Venti',
-                          isLast: true,
-                        ),
-                      ],
-                    ),
-                  ),
+                  SizedBox(height: 100),
                 ],
               ),
             ),
@@ -177,36 +251,25 @@ class Topping extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        Column(
-          children: [
-            Container(
-              height: 78,
-              width: 78,
-              decoration: BoxDecoration(
-                color: isSelected ? BaseColors.primaryColor : Color(0xFFF2F2F2),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Image.asset(
-                  "assets/images/${isSelected ? 'selected' : 'unselected'}_small.png"),
-            ),
-            SizedBox(height: 5),
-            Text(
-              label,
-              style: GoogleFonts.raleway().copyWith(
-                  fontSize: 18,
-                  color: isSelected ? BaseColors.primaryColor : Colors.grey),
-            ),
-          ],
+        Container(
+          height: 78,
+          width: 78,
+          decoration: BoxDecoration(
+            color: isSelected ? BaseColors.primaryColor : Color(0xFFF2F2F2),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Image.asset(
+              "assets/images/${isSelected ? 'selected' : 'unselected'}_$label.png"),
         ),
-        !isLast
-            ? SizedBox(
-                width: 18,
-              )
-            : SizedBox(
-                width: 8,
-              ),
+        SizedBox(height: 5),
+        Text(
+          label,
+          style: GoogleFonts.raleway().copyWith(
+              fontSize: 18,
+              color: isSelected ? BaseColors.primaryColor : Colors.grey),
+        ),
       ],
     );
   }

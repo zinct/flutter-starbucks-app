@@ -6,7 +6,8 @@ import 'package:starbacks/feature/home/home_screen.dart';
 import 'package:starbacks/feature/main/screen/main_screen.dart';
 
 import 'package:starbacks/feature/main/screen/splash_screen.dart';
-import 'package:starbacks/feature/product/screen/product_detail.dart';
+import 'package:starbacks/feature/product/screen/product_detail_screen.dart';
+import 'package:starbacks/feature/product/screen/product_list_screen.dart';
 
 // https://dribbble.com/shots/14218915-Starbucks-App-Concept
 
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
         ROUTER.SPLASH: (context) => const SplashScreen(),
         ROUTER.MAIN: (context) => const MainScreen(),
         ROUTER.HOME: (context) => const HomeScreen(),
-        ROUTER.PRODUCT_DETAIl: (context) => const ProductDetail(),
+        ROUTER.PRODUCT_DETAIl: (context) => const ProductDetailScreen(),
+        ROUTER.PRODUCT_LIST: (context) => const ProductListScreen(),
       },
     );
   }
