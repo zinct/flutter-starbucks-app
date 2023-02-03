@@ -5,4 +5,5 @@ class ROUTER {
   static const PRODUCT_DETAIl = '/product-detail';
   static const PRODUCT_LIST = '/product-list';
   static const NOTIFICATION = '/notification';
+  static const CART = '/cart';
 }

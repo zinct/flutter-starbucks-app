@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:starbacks/core/constants/router.dart';
 import 'package:starbacks/core/utils/theme_utils.dart';
+import 'package:starbacks/feature/cart/screen/cart_screen.dart';
 import 'package:starbacks/feature/home/home_screen.dart';
 import 'package:starbacks/feature/main/screen/main_screen.dart';
 
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         ROUTER.HOME: (context) => const HomeScreen(),
         ROUTER.PRODUCT_DETAIl: (context) => const ProductDetailScreen(),
         ROUTER.PRODUCT_LIST: (context) => const ProductListScreen(),
+        ROUTER.CART: (context) => const CartScreen(),
       },
     );
   }

@@ -50,10 +50,13 @@ class MainScreen extends StatelessWidget {
               color: BaseColors.accentColor,
             ),
             width: 50,
-            child: Icon(
-              UniconsLine.shopping_bag,
-              size: 35,
-              color: BaseColors.darkColor,
+            child: IconButton(
+              icon: Icon(
+                UniconsLine.shopping_bag,
+                size: 35,
+                color: BaseColors.darkColor,
+              ),
+              onPressed: () => Navigator.of(context).pushNamed(ROUTER.CART),
             ),
           ),
           SizedBox(
