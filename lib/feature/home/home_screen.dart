@@ -24,12 +24,13 @@ class HomeScreen extends StatelessWidget {
                   fontSize: 25, fontWeight: FontWeight.bold, height: 1.6),
             ),
           ),
+          SizedBox(height: 20),
           Container(
-            margin: EdgeInsets.only(top: 30),
             decoration: BoxDecoration(
               color: BaseColors.accentColor,
               borderRadius: BorderRadius.circular(26.5),
             ),
+            height: 50,
             width: double.infinity,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,18 +55,6 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                     ],
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: BaseColors.primaryColor,
-                  ),
-                  padding: EdgeInsets.all(15),
-                  child: Icon(
-                    UniconsLine.sliders_v_alt,
-                    color: Colors.white,
-                    size: 24,
                   ),
                 )
               ],
@@ -96,10 +85,14 @@ class HomeScreen extends StatelessWidget {
                   "Popular",
                   style: GoogleFonts.raleway().copyWith(fontSize: 20),
                 ),
-                Text(
-                  "See All",
-                  style: GoogleFonts.raleway()
-                      .copyWith(fontSize: 20, color: BaseColors.primaryColor),
+                InkWell(
+                  onTap: () =>
+                      Navigator.of(context).pushNamed(ROUTER.PRODUCT_LIST),
+                  child: Text(
+                    "See All",
+                    style: GoogleFonts.raleway()
+                        .copyWith(fontSize: 20, color: BaseColors.primaryColor),
+                  ),
                 ),
               ],
             ),
