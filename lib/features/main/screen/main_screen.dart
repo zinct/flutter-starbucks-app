@@ -2,20 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:starbacks/core/constants/router.dart';
 import 'package:starbacks/core/resources/colors.dart';
-import 'package:starbacks/feature/home/home_screen.dart';
+import 'package:starbacks/features/home/home_screen.dart';
+import 'package:starbacks/features/whistlist/screen/whistlist_screen.dart';
 import 'package:unicons/unicons.dart';
 
-class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+class MainScreen extends StatefulWidget {
+  MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  final selectedWidget = [
+    HomeScreen(),
+    WhistlistScreen(),
+  ];
+
+  int currentIndex = 0;
+
+  void _handleBottomNavigation(selectedIndex) {
+    setState(() {
+      currentIndex = selectedIndex;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final selectedWidget = [
-      HomeScreen(),
-    ];
-
-    int currentIndex = 0;
-
     return Scaffold(
       backgroundColor: BaseColors.backgroundColor,
       appBar: AppBar(
@@ -65,41 +78,31 @@ class MainScreen extends StatelessWidget {
         ],
       ),
       body: selectedWidget[currentIndex],
-      bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.circular(666),
-        child: BottomNavigationBar(
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          backgroundColor: BaseColors.primaryColor,
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: BaseColors.backgroundColor,
-          unselectedItemColor: BaseColors.backgroundColor,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(UniconsLine.home),
-              label: "",
-              backgroundColor: BaseColors.primaryColor,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(UniconsLine.wallet),
-              label: "",
-              backgroundColor: BaseColors.primaryColor,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(UniconsLine.heart),
-              label: "",
-              backgroundColor: BaseColors.primaryColor,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(UniconsLine.user),
-              label: "",
-              backgroundColor: BaseColors.primaryColor,
-            ),
-          ],
-          onTap: (selectedIndex) {
-            Navigator.of(context).pushNamed(ROUTER.HOME);
-          },
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        backgroundColor: BaseColors.primaryColor,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: BaseColors.backgroundColor,
+        unselectedItemColor: BaseColors.backgroundColor,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(UniconsLine.home),
+            label: "",
+            backgroundColor: BaseColors.primaryColor,
+          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(UniconsLine.wallet),
+          //   label: "",
+          //   backgroundColor: BaseColors.primaryColor,
+          // ),
+          BottomNavigationBarItem(
+            icon: Icon(UniconsLine.heart),
+            label: "",
+            backgroundColor: BaseColors.primaryColor,
+          ),
+        ],
+        onTap: _handleBottomNavigation,
       ),
     );
   }

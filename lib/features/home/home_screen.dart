@@ -146,17 +146,16 @@ class PopularItem extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-                color: BaseColors.backgroundColor,
-                borderRadius: BorderRadius.circular(14),
-                boxShadow: [
-                  BoxShadow(
-                    offset: Offset(0, 0),
-                    blurRadius: 10,
-                    color: Color(0xFF000000).withOpacity(.1),
-                  ),
-                ]
-                // border: Border.all(color: Colors.black, width: 1),
+              color: BaseColors.backgroundColor,
+              borderRadius: BorderRadius.circular(14),
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, 0),
+                  blurRadius: 10,
+                  color: Color(0xFF000000).withOpacity(.1),
                 ),
+              ],
+            ),
             width: 256,
             height: 390,
             child: Column(
