@@ -1,10 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:starbacks/core/constants/router.dart';
 import 'package:starbacks/features/intro/presentation/cubit/splash/splash_cubit.dart';
 import 'package:starbacks/features/intro/presentation/cubit/splash/splash_state.dart';
+import 'package:starbacks/injection_container.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -12,7 +11,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SplashCubit()..start(),
+      create: (context) => getIt<SplashCubit>()..start(),
       child: SplashScreenWidget(),
     );
   }

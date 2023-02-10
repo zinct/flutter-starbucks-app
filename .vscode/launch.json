@@ -31,7 +31,8 @@
       "name": "IOS Iphone 14 Pro Max",
       "request": "launch",
       "type": "dart",
-      "deviceId": "7213AF0E-8A57-41DF-9065-FBBE72F28D99"
+      "deviceId": "7213AF0E-8A57-41DF-9065-FBBE72F28D99",
+      "flutterMode": "debug"
     }
   ],
   "compounds": [
