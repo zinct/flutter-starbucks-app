@@ -11,9 +11,9 @@ class CartRepositoryV1 extends CartRepository {
   CartRepositoryV1({required this.localDataSource});
 
   @override
-  Future<Either<Failure, List<Cart>>> getListCart() {
-    // TODO: implement getListCart
-    throw UnimplementedError();
+  Future<Either<Failure, List<Cart>>> getListCart() async {
+    var data = await localDataSource.getListCart();
+    return Right(data);
   }
 
   @override

@@ -6,7 +6,7 @@ import 'package:starbacks/features/product/domain/entities/product.dart';
 import 'package:starbacks/injection_container.dart';
 
 abstract class CartLocalDataSource {
-  Future<void> getListCart();
+  Future<List<Cart>> getListCart();
   Future<void> createCart(
       Product product, ProductPrice productPrice, int quantity);
 }
@@ -15,9 +15,21 @@ const String CART_KEY = 'carts';
 
 class CartLocalDataSourceSharedPreference extends CartLocalDataSource {
   @override
-  Future<void> getListCart() {
-    // TODO: implement getListCart
-    throw UnimplementedError();
+  Future<List<Cart>> getListCart() async {
+    try {
+      final prefs = await getIt.getAsync<SharedPreferences>();
+
+      // Get Currenct Cart
+      final cartData = prefs.getString(CART_KEY);
+      if (cartData == null) {
+        return [];
+      } else {
+        var rawCurrentCart = jsonDecode(cartData);
+        return (rawCurrentCart as List).map((e) => Cart.fromJson(e)).toList();
+      }
+    } catch (err) {
+      throw err;
+    }
   }
 
   @override
@@ -50,8 +62,10 @@ class CartLocalDataSourceSharedPreference extends CartLocalDataSource {
             (rawCurrentCart as List).map((e) => Cart.fromJson(e)).toList();
 
         // Check if product already exists
-        List<Cart> selectedCart =
-            mappedCurrentCart.where((e) => e.product.id == product.id).toList();
+        List<Cart> selectedCart = mappedCurrentCart
+            .where((e) =>
+                e.product.id == product.id && e.productPrice == productPrice)
+            .toList();
         // Add New Cart if product doesnt exists
         if (selectedCart.isEmpty) {
           mappedCurrentCart.add(Cart(

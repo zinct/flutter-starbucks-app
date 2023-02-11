@@ -17,9 +17,11 @@ class Cart extends Equatable {
   });
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [product, productPrice, quantity];
 
   factory Cart.fromJson(Map<String, dynamic> json) => _$CartFromJson(json);
+
+  Cart get cart => this;
 
   Map<String, dynamic> toJson() => _$CartToJson(this);
 }

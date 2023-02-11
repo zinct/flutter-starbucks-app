@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:starbacks/core/resources/colors.dart';
-import 'package:unicons/unicons.dart';
+import 'package:starbacks/core/utils/currency_utils.dart';
+import 'package:starbacks/features/cart/domain/entities/cart.dart';
+import 'package:starbacks/features/cart/presentation/cubit/cart/cart_cubit.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    context.read<CartCubit>()..getListCart();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: BaseColors.backgroundColor,
@@ -52,12 +57,16 @@ class CartScreen extends StatelessWidget {
               ),
               width: 50,
               child: Center(
-                child: Text(
-                  "4",
-                  style: GoogleFonts.poppins().copyWith(
-                    fontSize: 30,
-                    color: BaseColors.grey,
-                  ),
+                child: BlocBuilder<CartCubit, CartState>(
+                  builder: (context, state) {
+                    return Text(
+                      state.cart.length.toString(),
+                      style: GoogleFonts.poppins().copyWith(
+                        fontSize: 30,
+                        color: BaseColors.grey,
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -124,25 +133,25 @@ class CartScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(width: 20),
-                            Expanded(
-                              flex: 1,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: BaseColors.primaryColor,
-                                  borderRadius: BorderRadius.circular(666),
-                                ),
-                                height: 30,
-                                child: Center(
-                                  child: Text(
-                                    "Change",
-                                    style: GoogleFonts.poppins().copyWith(
-                                      fontSize: 12,
-                                      color: BaseColors.backgroundColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            // Expanded(
+                            //   flex: 1,
+                            //   child: Container(
+                            //     decoration: BoxDecoration(
+                            //       color: BaseColors.primaryColor,
+                            //       borderRadius: BorderRadius.circular(666),
+                            //     ),
+                            //     height: 30,
+                            //     child: Center(
+                            //       child: Text(
+                            //         "Change",
+                            //         style: GoogleFonts.poppins().copyWith(
+                            //           fontSize: 12,
+                            //           color: BaseColors.backgroundColor,
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -152,9 +161,19 @@ class CartScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 40),
-            CartItem(),
-            CartItem(),
-            CartItem(),
+            BlocBuilder<CartCubit, CartState>(
+              builder: (context, state) {
+                return Column(
+                  children: state.cart
+                      .map((e) => CartItem(
+                            e.cart,
+                            key: ValueKey(e.product.id.toString() +
+                                e.productPrice.name.toString()),
+                          ))
+                      .toList(),
+                );
+              },
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -236,7 +255,9 @@ class CartScreen extends StatelessWidget {
 }
 
 class CartItem extends StatelessWidget {
-  const CartItem({
+  final Cart cart;
+  CartItem(
+    this.cart, {
     Key? key,
   }) : super(key: key);
 
@@ -258,20 +279,20 @@ class CartItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(
-                  flex: 2,
+                  flex: 1,
                   child: Container(
                     alignment: Alignment.topLeft,
-                    height: 100,
+                    height: 80,
                     child: ClipRRect(
-                      child: Image.asset(
-                        'assets/images/product/chocolate_frappuccino.png',
+                      child: Image.network(
+                        cart.product.image,
                         fit: BoxFit.fitHeight,
                       ),
                     ),
                   ),
                 ),
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Column(
@@ -279,17 +300,17 @@ class CartItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Coffee",
-                          style: GoogleFonts.raleway().copyWith(fontSize: 14),
-                        ),
-                        Text(
-                          "Chocolate Frappuccino",
+                          cart.product.name,
                           style: GoogleFonts.raleway().copyWith(
                               fontSize: 15, fontWeight: FontWeight.bold),
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
-                          "\$20.00",
+                          cart.productPrice.name,
+                          style: GoogleFonts.raleway().copyWith(fontSize: 14),
+                        ),
+                        Text(
+                          "\$${CurrencyUtils.usdFormat(cart.productPrice.amount).toString()}",
                           style: GoogleFonts.poppins().copyWith(
                             fontSize: 18,
                             color: BaseColors.primaryColor,
@@ -299,26 +320,87 @@ class CartItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 23),
                 Expanded(
                   flex: 1,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: BaseColors.primaryColor,
+                      color: BaseColors.accentColor,
                       borderRadius: BorderRadius.circular(666),
                     ),
                     height: 30,
-                    child: Center(
-                      child: Text(
-                        "+Add",
-                        style: GoogleFonts.poppins().copyWith(
-                          fontSize: 12,
-                          color: BaseColors.backgroundColor,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: BaseColors.primaryColor,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                "-",
+                                style: GoogleFonts.poppins().copyWith(
+                                  fontSize: 12,
+                                  color: BaseColors.backgroundColor,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        Expanded(
+                          child: Container(
+                            child: Center(
+                              child: Text(
+                                "1",
+                                style: GoogleFonts.poppins().copyWith(
+                                  fontSize: 12,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: BaseColors.primaryColor,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                "+",
+                                style: GoogleFonts.poppins().copyWith(
+                                  fontSize: 12,
+                                  color: BaseColors.backgroundColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
+                // Expanded(
+                //   flex: 1,
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //       color: BaseColors.primaryColor,
+                //       borderRadius: BorderRadius.circular(666),
+                //     ),
+                //     height: 30,
+                //     child: Center(
+                //       child: Text(
+                //         "+Add",
+                //         style: GoogleFonts.poppins().copyWith(
+                //           fontSize: 12,
+                //           color: BaseColors.backgroundColor,
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 SizedBox(width: 23),
               ],
             ),

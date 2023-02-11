@@ -43,7 +43,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => di.getIt<CartCubit>()),
+          BlocProvider(
+              create: (context) => di.getIt<CartCubit>()..getListCart()),
         ],
         child: MaterialApp(
           theme: themeData,

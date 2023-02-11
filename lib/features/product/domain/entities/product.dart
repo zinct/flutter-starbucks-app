@@ -5,7 +5,7 @@ part 'product.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Product extends Equatable {
-  final String id, name, description, image;
+  final String id, name, description, image, category;
   final List<ProductPrice> prices;
 
   const Product(
@@ -13,10 +13,11 @@ class Product extends Equatable {
       required this.name,
       required this.description,
       required this.image,
+      required this.category,
       required this.prices});
 
   @override
-  List<Object?> get props => [id, name, description, image, prices];
+  List<Object?> get props => [id, name, description, image, prices, category];
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);

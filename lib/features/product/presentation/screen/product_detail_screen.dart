@@ -198,16 +198,17 @@ class ProductDetailScreenWidget extends StatelessWidget {
             ),
             Align(
               alignment: Alignment.bottomCenter,
-              child: InkWell(
-                onTap: () => cartCubit.createCart(
-                    CreateCartParams(product, priceCubit.selectedPrice, 1)),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: BaseColors.primaryColor,
-                    borderRadius: BorderRadius.circular(666),
-                  ),
-                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-                  height: 55,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: BaseColors.primaryColor,
+                  borderRadius: BorderRadius.circular(666),
+                ),
+                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                height: 55,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(666),
+                  onTap: () => cartCubit.createCart(
+                      CreateCartParams(product, priceCubit.selectedPrice, 1)),
                   child: Center(
                     child: Text(
                       "Add to bag",
