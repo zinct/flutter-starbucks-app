@@ -25,4 +25,31 @@ class CartRepositoryV1 extends CartRepository {
     await localDataSource.createCart(product, productPrice, quantity);
     return Right(true);
   }
+
+  @override
+  Future<Either<Failure, List<Cart>>> changeQuantity(
+      Cart cart, int quantity) async {
+    var data = await localDataSource.changeQuantity(cart, quantity);
+    return Right(data);
+  }
+
+  @override
+  Future<Either<Failure, bool>> emptyCart() async {
+    try {
+      await localDataSource.emptyCart();
+      return Right(true);
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> removeCart(Cart cart) async {
+    try {
+      await localDataSource.removeCart(cart);
+      return Right(true);
+    } catch (err) {
+      throw err;
+    }
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:starbacks/features/cart/domain/entities/cart.dart';
 
 abstract class Failure extends Equatable {
   final String message;
@@ -20,4 +21,13 @@ class CriticalFailure extends Failure {
   @override
   // TODO: implement props
   List<Object?> get props => [message];
+}
+
+class CartFailure extends Failure {
+  final Cart cart;
+  CartFailure(this.cart, super.message);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [cart, message];
 }

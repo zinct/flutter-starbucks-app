@@ -1,8 +1,8 @@
 part of 'cart_cubit.dart';
 
-enum CartStatus { initial, loading, done, failure, added }
+enum CartStatus { initial, loading, done, failure, added, removed }
 
-class CartState {
+class CartState extends Equatable {
   final List<Cart> cart;
   final CartStatus status;
 
@@ -20,4 +20,25 @@ class CartState {
       cart: cart ?? this.cart,
     );
   }
+
+  int getSubtotal() {
+    if (cart.isEmpty) return 0;
+    return cart
+        .map((e) => e.productPrice.amount * e.quantity)
+        .reduce((value, element) => value + element);
+  }
+
+  double getCalculateTotal() {
+    if (cart.isEmpty) return 0;
+
+    return cart
+            .map((e) => e.productPrice.amount * e.quantity)
+            .reduce((value, element) => value + element) +
+        1.32 +
+        2.83;
+  }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [cart, status];
 }
